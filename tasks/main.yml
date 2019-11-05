@@ -1,0 +1,9 @@
+---
+# @see https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-enable-epel/
+- name: calculate epel yum repository to install
+  set_fact:
+    epel_yum_repository: "{{ 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm' if ansible_distribution == 'Amazon' and ansible_service_mgr == 'sysvinit' else 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm' if ansible_distribution == 'Amazon' and ansible_service_mgr == 'upstart' else 'epel-release' }}"
+
+- name: install epel yum repository to install ius repository
+  yum:
+    name: "{{ epel_yum_repository }}"
